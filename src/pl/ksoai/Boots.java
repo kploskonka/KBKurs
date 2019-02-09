@@ -1,10 +1,10 @@
 package pl.ksoai;
 
 public class Boots extends Product {
-    private int size;
+    private Integer size;
     private boolean isNaturalSkin;
 
-    public int getSize() {
+    public Integer getSize() {
         return size;
     }
 
@@ -12,9 +12,17 @@ public class Boots extends Product {
         return isNaturalSkin;
     }
 
-    public Boots(long id, String productName, double price, double weight, String color, int productCount, int size, boolean isNaturalSkin) {
+    public Boots(Long id, String productName, Float price, Float weight, String color, Integer productCount, Integer size, boolean isNaturalSkin) {
         super(id, productName, price, weight, color, productCount);
         this.size = size;
         this.isNaturalSkin = isNaturalSkin;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "Boots{" +
+                "size='" + size + '\'' +
+                ", isNaturalSkin=" + isNaturalSkin +
+                '}';
     }
 }

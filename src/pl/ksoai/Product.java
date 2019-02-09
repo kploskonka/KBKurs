@@ -3,10 +3,10 @@ package pl.ksoai;
 public class Product {
     private Long id;
     private String productName;
-    private double price;
-    private double weight;
+    private Float price;
+    private Float weight;
     private String color;
-    private int productCount;
+    private Integer productCount;
 
     public Long getId() {
         return id;
@@ -16,11 +16,11 @@ public class Product {
         return productName;
     }
 
-    public double getPrice() {
+    public Float getPrice() {
         return price;
     }
 
-    public double getWeight() {
+    public Float getWeight() {
         return weight;
     }
 
@@ -28,11 +28,11 @@ public class Product {
         return color;
     }
 
-    public int getProductCount() {
+    public Integer getProductCount() {
         return productCount;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 
@@ -40,12 +40,24 @@ public class Product {
         this.productCount = productCount;
     }
 
-    public Product(long id, String productName, double price, double weight, String color, int productCount) {
+    public Product(Long id, String productName, Float price, Float weight, String color, Integer productCount) {
         this.id = id;
         this.productName = productName;
         this.price = price;
         this.weight = weight;
         this.color = color;
         this.productCount = productCount;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", productName='" + productName + '\'' +
+                ", price=" + price +
+                ", weight=" + weight +
+                ", color='" + color + '\'' +
+                ", productCount=" + productCount +
+                '}';
     }
 }

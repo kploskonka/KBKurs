@@ -1,11 +1,11 @@
 package pl.ksoai;
 
 public class User {
-    private long id;
+    private Long id;
     private String login;
     private String password;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -23,4 +23,12 @@ public class User {
         this.password = password;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }
