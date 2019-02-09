@@ -11,4 +11,10 @@ public class Boots extends Product {
     public boolean isNaturalSkin() {
         return isNaturalSkin;
     }
+
+    public Boots(long id, String productName, double price, double weight, String color, int productCount, int size, boolean isNaturalSkin) {
+        super(id, productName, price, weight, color, productCount);
+        this.size = size;
+        this.isNaturalSkin = isNaturalSkin;
+    }
 }
