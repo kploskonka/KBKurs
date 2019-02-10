@@ -16,5 +16,5 @@ public interface ProductService {
 
     boolean doesProductExistById(Long productId);
 
-    boolean isAmountBiggerThanOne(String productName);
+    boolean isAvailableOnWarehouse(String productName);
 }
