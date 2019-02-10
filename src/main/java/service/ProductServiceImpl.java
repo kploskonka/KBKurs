@@ -58,7 +58,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public boolean isAvailableOnWarehouse(String productName) {
-        if (getProductByName(productName).getProductCount() >= 1) { return true;}
+        if (doesProductExistByName(productName)) {
+            if (getProductByName(productName).getProductCount() >= 1) { return true;}
+        }
 
         return false;
     }
