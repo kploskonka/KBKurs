@@ -1,6 +1,5 @@
 package service;
 
-import api.ProductService;
 import entity.Boots;
 import entity.Cloth;
 import entity.Product;
@@ -84,7 +83,7 @@ public class ProductServiceTest {
         ProductServiceImpl productService = new ProductServiceImpl(productList);
         final Product result = productService.getProductByName("RANDOM-PRODUCT");
 
-        Assert.assertEquals(null, result);
+        Assert.assertNull(result);
 
     }
 
@@ -96,7 +95,7 @@ public class ProductServiceTest {
         ProductServiceImpl productService = new ProductServiceImpl(productList);
         final boolean result = productService.doesProductExistByName("Boots");
 
-        Assert.assertEquals(true, result);
+        Assert.assertTrue(result);
     }
 
     @Test
@@ -107,7 +106,7 @@ public class ProductServiceTest {
         ProductServiceImpl productService = new ProductServiceImpl(productList);
         final boolean result = productService.doesProductExistByName("RANDOM-PRODUCT");
 
-        Assert.assertEquals(false, result);
+        Assert.assertFalse(result);
     }
 
     @Test
@@ -118,7 +117,7 @@ public class ProductServiceTest {
         ProductServiceImpl productService = new ProductServiceImpl(productList);
         final boolean result = productService.doesProductExistById(2L);
 
-        Assert.assertEquals(true, result);
+        Assert.assertTrue(result);
     }
 
     @Test
@@ -129,7 +128,7 @@ public class ProductServiceTest {
         ProductServiceImpl productService = new ProductServiceImpl(productList);
         final boolean result = productService.doesProductExistById(15L);
 
-        Assert.assertEquals(false, result);
+        Assert.assertFalse(result);
     }
 
     @Test
@@ -140,7 +139,7 @@ public class ProductServiceTest {
         ProductServiceImpl productService = new ProductServiceImpl(productList);
         final boolean result = productService.isAvailableOnWarehouse("Boots");
 
-        Assert.assertEquals(true, result);
+        Assert.assertTrue(result);
     }
 
     @Test
@@ -151,7 +150,7 @@ public class ProductServiceTest {
         ProductServiceImpl productService = new ProductServiceImpl(productList);
         final boolean result = productService.isAvailableOnWarehouse("RANDOM-PRODUCT");
 
-        Assert.assertEquals(false, result);
+        Assert.assertFalse(result);
     }
 
 }
