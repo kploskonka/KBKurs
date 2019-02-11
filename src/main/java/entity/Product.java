@@ -49,19 +49,6 @@ public class Product {
         this.productCount = productCount;
     }
 
-//    @Override
-////    public String toString() {
-////        return "Product{" +
-////                "id=" + id +
-////                ", productName='" + productName + '\'' +
-////                ", price=" + price +
-////                ", weight=" + weight +
-////                ", color='" + color + '\'' +
-////                ", productCount=" + productCount +
-////                '}';
-////    }
-
-
     @Override
     public String toString() {
         return id + "#" + productName + "#" + price + "#" + weight + "#" + color + "#" + productCount;
