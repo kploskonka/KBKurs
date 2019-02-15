@@ -6,15 +6,15 @@ import java.util.List;
 
 public interface ProductService {
 
-    List<Product> getAllProducts();
+	List<Product> getAllProducts();
 
-    int countProducts();
+	int countProducts();
 
-    Product getProductByName(String productName);
+	Product getProductByName(String productName);
 
-    boolean doesProductExistByName(String productName);
+	boolean doesProductExistByName(String productName);
 
-    boolean doesProductExistById(Long productId);
+	boolean doesProductExistById(Long productId);
 
-    boolean isAvailableOnWarehouse(String productName);
+	boolean isAvailableOnWarehouse(String productName);
 }

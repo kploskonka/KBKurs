@@ -8,36 +8,36 @@ import java.util.List;
 
 public class UserServiceImpl implements UserService {
 
-    List<User> users;
+	List<User> users;
 
-    public UserServiceImpl() {
-        this.users = new ArrayList<User>();
-    }
+	public UserServiceImpl() {
+		this.users = new ArrayList<User>();
+	}
 
-    public UserServiceImpl(List<User> users) {
-        this.users = users;
-    }
+	public UserServiceImpl(List<User> users) {
+		this.users = users;
+	}
 
-    public List<User> getAllUsers() {
-        return users;
-    }
+	public List<User> getAllUsers() {
+		return users;
+	}
 
-    @Override
-    public void addUser(User user) {
-        users.add(user);
-    }
+	@Override
+	public void addUser(User user) {
+		users.add(user);
+	}
 
-    @Override
-    public void removeUserById(Long userId) {
-        for (int i = 0; i < users.size(); i++) {
-            User userFromList = users.get(i);
+	@Override
+	public void removeUserById(Long userId) {
+		for (int i = 0; i < users.size(); i++) {
+			User userFromList = users.get(i);
 
-            if (userFromList.getId() == userId) {
-                users.remove(i);
-                break;
-            }
-        }
-    }
+			if (userFromList.getId() == userId) {
+				users.remove(i);
+				break;
+			}
+		}
+	}
 
 
 }
