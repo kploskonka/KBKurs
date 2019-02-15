@@ -22,10 +22,10 @@ public class UserValidator {
 		if (isUserByLoginExist(user.getLogin())) {
 			throw new UserLoginAlreadyExistException("User with this login already exists.");
 		}
-		if (user.getLogin().length() < 4) {
+		if (isLoginLongEnough(user.getLogin())) {
 			throw new UserShortLengthLoginException("Login should be at least 4 characters long.");
 		}
-		if (user.getPassword().length() < 6) {
+		if (isPasswordLongEnough(user.getPassword())) {
 			throw new UserShortLengthPasswordException("Password should be at least 6 characters long.");
 		}
 		return true;
@@ -45,6 +45,20 @@ public class UserValidator {
 			System.out.println("User list is empty");
 			return false;
 		}
+	}
+
+	private boolean isPasswordLongEnough(String userPassword) {
+		if (userPassword.length() >= 6) {
+			return true;
+		}
+		return false;
+	}
+
+	private boolean isLoginLongEnough(String userLogin) {
+		if (userLogin.length() >= 4) {
+			return true;
+		}
+		return false;
 	}
 
 	public static UserValidator getInstance() {
