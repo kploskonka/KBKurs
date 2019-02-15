@@ -2,7 +2,6 @@ package api;
 
 import entity.Product;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
