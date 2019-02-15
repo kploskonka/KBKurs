@@ -1,8 +1,8 @@
-package service;
+package pl.ksoai.service;
 
-import entity.Boots;
-import entity.Cloth;
-import entity.Product;
+import pl.ksoai.entity.Boots;
+import pl.ksoai.entity.Cloth;
+import pl.ksoai.entity.Product;
 import org.junit.Assert;
 import org.junit.Test;
 

@@ -1,7 +1,7 @@
-package dao;
+package pl.ksoai.dao;
 
-import api.ProductDao;
-import entity.Product;
+import pl.ksoai.api.ProductDao;
+import pl.ksoai.entity.Product;
 
 import java.io.*;
 import java.util.ArrayList;

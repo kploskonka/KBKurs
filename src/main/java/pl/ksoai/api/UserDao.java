@@ -1,6 +1,6 @@
-package api;
+package pl.ksoai.api;
 
-import entity.User;
+import pl.ksoai.entity.User;
 
 import java.io.IOException;
 import java.util.List;

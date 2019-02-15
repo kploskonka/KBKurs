@@ -1,7 +1,7 @@
-package service;
+package pl.ksoai.service;
 
-import api.ProductService;
-import entity.Product;
+import pl.ksoai.api.ProductService;
+import pl.ksoai.entity.Product;
 
 import java.util.ArrayList;
 import java.util.List;

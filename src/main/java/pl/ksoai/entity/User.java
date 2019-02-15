@@ -1,4 +1,4 @@
-package entity;
+package pl.ksoai.entity;
 
 public class User {
 	private Long id;

@@ -1,6 +1,6 @@
-package api;
+package pl.ksoai.api;
 
-import entity.Product;
+import pl.ksoai.entity.Product;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package entity;
+package pl.ksoai.entity;
 
 public class Cloth extends Product {
 	private String size;
