@@ -32,12 +32,10 @@ public class UserServiceImpl implements UserService {
 		for (int i = 0; i < users.size(); i++) {
 			User userFromList = users.get(i);
 
-			if (userFromList.getId() == userId) {
+			if (userFromList.getId().equals(userId)) {
 				users.remove(i);
 				break;
 			}
 		}
 	}
-
-
 }
