@@ -1,7 +1,6 @@
-package service;
+package pl.ksoai.service;
 
-import api.UserService;
-import entity.User;
+import pl.ksoai.entity.User;
 import org.junit.Assert;
 import org.junit.Test;
 
