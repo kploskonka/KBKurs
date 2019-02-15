@@ -30,16 +30,16 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public Product getProductByName(String productName) {
-		for (int i = 0; i < products.size(); i++) {
-			if (products.get(i).getProductName().equalsIgnoreCase(productName)) return products.get(i);
+		for (Product product : products) {
+			if (product.getProductName().equalsIgnoreCase(productName)) return product;
 		}
 		return null;
 	}
 
 	@Override
-	public boolean doesProductExistByName(String productName) {
-		for (int i = 0; i < products.size(); i++) {
-			if (products.get(i).getProductName().equalsIgnoreCase(productName)) {
+	public boolean doesProductExist(String productName) {
+		for (Product product : products) {
+			if (product.getProductName().equalsIgnoreCase(productName)) {
 				return true;
 			}
 		}
@@ -47,9 +47,9 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public boolean doesProductExistById(Long productId) {
-		for (int i = 0; i < products.size(); i++) {
-			if (products.get(i).getId().equals(productId)) {
+	public boolean doesProductExist(Long productId) {
+		for (Product product : products) {
+			if (product.getId().equals(productId)) {
 				return true;
 			}
 		}
@@ -58,8 +58,8 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public boolean isAvailableOnWarehouse(String productName) {
-		if (doesProductExistByName(productName)) {
-			if (getProductByName(productName).getProductCount() >= 1) { return true;}
+		if (doesProductExist(productName)) {
+			if (getProductByName(productName).getProductCount() > 0) { return true;}
 		}
 
 		return false;

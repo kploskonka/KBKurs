@@ -12,9 +12,9 @@ public interface ProductService {
 
 	Product getProductByName(String productName);
 
-	boolean doesProductExistByName(String productName);
+	boolean doesProductExist(String productName);
 
-	boolean doesProductExistById(Long productId);
+	boolean doesProductExist(Long productId);
 
 	boolean isAvailableOnWarehouse(String productName);
 }

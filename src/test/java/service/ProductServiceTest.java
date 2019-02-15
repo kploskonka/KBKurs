@@ -93,7 +93,7 @@ public class ProductServiceTest {
         productList.add(new Boots(2L, "Boots", 35.0f, 0.3f, "Black", 4, 38, true));
 
         ProductServiceImpl productService = new ProductServiceImpl(productList);
-        final boolean result = productService.doesProductExistByName("Boots");
+        final boolean result = productService.doesProductExist("Boots");
 
         Assert.assertTrue(result);
     }
@@ -104,7 +104,7 @@ public class ProductServiceTest {
         productList.add(new Boots(2L, "Boots", 35.0f, 0.3f, "Black", 4, 38, true));
 
         ProductServiceImpl productService = new ProductServiceImpl(productList);
-        final boolean result = productService.doesProductExistByName("RANDOM-PRODUCT");
+        final boolean result = productService.doesProductExist("RANDOM-PRODUCT");
 
         Assert.assertFalse(result);
     }
@@ -115,7 +115,7 @@ public class ProductServiceTest {
         productList.add(new Boots(2L, "Boots", 35.0f, 0.3f, "Black", 4, 38, true));
 
         ProductServiceImpl productService = new ProductServiceImpl(productList);
-        final boolean result = productService.doesProductExistById(2L);
+        final boolean result = productService.doesProductExist(2L);
 
         Assert.assertTrue(result);
     }
@@ -126,7 +126,7 @@ public class ProductServiceTest {
         productList.add(new Boots(2L, "Boots", 35.0f, 0.3f, "Black", 4, 38, true));
 
         ProductServiceImpl productService = new ProductServiceImpl(productList);
-        final boolean result = productService.doesProductExistById(15L);
+        final boolean result = productService.doesProductExist(15L);
 
         Assert.assertFalse(result);
     }
