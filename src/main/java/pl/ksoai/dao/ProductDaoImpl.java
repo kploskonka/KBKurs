@@ -11,8 +11,8 @@ import java.util.List;
 
 public class ProductDaoImpl implements ProductDao {
 
-	private final String fileName;
-	private final String productType;
+	private String fileName;
+	private String productType;
 
 	public ProductDaoImpl(String fileName, String productType) throws IOException {
 		this.fileName = fileName;

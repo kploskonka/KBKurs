@@ -11,7 +11,7 @@ import java.util.List;
 
 public class UserDaoImpl implements UserDao {
 
-	private final String fileName;
+	private String fileName;
 
 	public UserDaoImpl(String fileName) {
 		this.fileName = fileName;
