@@ -4,6 +4,7 @@ public class User {
 	private Long id;
 	private String login;
 	private String password;
+	public final static String USER_SEPARATOR = "#";
 
 	public Long getId() {
 		return id;
@@ -25,6 +26,6 @@ public class User {
 
 	@Override
 	public String toString() {
-		return id + "#" + login + "#" + password;
+		return id + USER_SEPARATOR + login + USER_SEPARATOR + password;
 	}
 }

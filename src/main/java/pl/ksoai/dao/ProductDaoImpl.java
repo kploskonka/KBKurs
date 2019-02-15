@@ -70,10 +70,6 @@ public class ProductDaoImpl implements ProductDao {
 			}
 		}
 
-		PrintWriter writer = new PrintWriter(fileName);
-		writer.print("");
-		writer.close();
-
 		saveProducts(productList);
 	}
 
@@ -87,10 +83,6 @@ public class ProductDaoImpl implements ProductDao {
 				break;
 			}
 		}
-
-		PrintWriter writer = new PrintWriter(fileName);
-		writer.print("");
-		writer.close();
 
 		saveProducts(productList);
 	}

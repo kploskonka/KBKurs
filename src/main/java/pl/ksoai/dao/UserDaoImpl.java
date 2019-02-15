@@ -2,6 +2,8 @@ package pl.ksoai.dao;
 
 import pl.ksoai.api.UserDao;
 import pl.ksoai.entity.User;
+import pl.ksoai.entity.parser.UserParser;
+import pl.ksoai.utils.FileUtils;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -17,15 +19,14 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public List<User> getAllUsers() throws IOException {
-		FileReader fileReader = new FileReader(fileName);
-		BufferedReader reader = new BufferedReader(fileReader);
-		List<User> userList = new ArrayList<User>();
+		BufferedReader reader = new BufferedReader(new FileReader(fileName));
+		List<User> userList = new ArrayList<>();
 
 		String readLine = reader.readLine();
 		while(readLine != null) {
-			String [] values = readLine.split("#");
-			User user = new User(Long.parseLong(values[0]), values[1], values[2]);
+			User user = UserParser.stringToUser(readLine);
 			userList.add(user);
+			readLine = reader.readLine();
 		}
 
 		reader.close();
@@ -33,24 +34,22 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public void saveUser(User user) throws IOException {
-		FileOutputStream fileOutputStream = new FileOutputStream(fileName, true);
-		PrintWriter printWriter = new PrintWriter(fileOutputStream);
-
-		printWriter.write(user.toString());
-		printWriter.close();
-	}
-
-	@Override
 	public void saveUsers(List<User> userList) throws IOException {
-		FileOutputStream fileOutputStream = new FileOutputStream(fileName, true);
-		PrintWriter printWriter = new PrintWriter(fileOutputStream);
+		FileUtils.clearFile(fileName);
+		PrintWriter printWriter = new PrintWriter(new FileOutputStream(fileName, true));
 
 		for (User user : userList) {
 			printWriter.write(user.toString());
 		}
 
 		printWriter.close();
+	}
+
+	@Override
+	public void saveUser(User user) throws IOException {
+		List<User> users = getAllUsers();
+		users.add(user);
+		saveUsers(users);
 	}
 
 	@Override
@@ -87,10 +86,6 @@ public class UserDaoImpl implements UserDao {
 			}
 		}
 
-		PrintWriter writer = new PrintWriter(fileName);
-		writer.print("");
-		writer.close();
-
 		saveUsers(userList);
 	}
 
@@ -104,10 +99,6 @@ public class UserDaoImpl implements UserDao {
 				break;
 			}
 		}
-
-		PrintWriter writer = new PrintWriter(fileName);
-		writer.print("");
-		writer.close();
 
 		saveUsers(userList);
 	}
