@@ -1,41 +1,46 @@
 package pl.ksoai.service;
 
+import pl.ksoai.api.UserDao;
 import pl.ksoai.api.UserService;
+import pl.ksoai.dao.UserDaoImpl;
 import pl.ksoai.entity.User;
+import pl.ksoai.exceptions.UserLoginAlreadyExistException;
+import pl.ksoai.exceptions.UserShortLengthLoginException;
+import pl.ksoai.exceptions.UserShortLengthPasswordException;
+import pl.ksoai.validator.UserValidator;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
 
-	List<User> users;
+	private static UserServiceImpl instance = null;
+	private UserDao userDao = UserDaoImpl.getInstance();
+	private UserValidator userValidator = UserValidator.getInstance();
 
-	public UserServiceImpl() {
-		this.users = new ArrayList<User>();
-	}
+	private UserServiceImpl() { }
 
-	public UserServiceImpl(List<User> users) {
-		this.users = users;
-	}
-
-	public List<User> getAllUsers() {
-		return users;
-	}
-
-	@Override
-	public void addUser(User user) {
-		users.add(user);
-	}
-
-	@Override
-	public void removeUserById(Long userId) {
-		for (int i = 0; i < users.size(); i++) {
-			User userFromList = users.get(i);
-
-			if (userFromList.getId().equals(userId)) {
-				users.remove(i);
-				break;
-			}
+	public static UserServiceImpl getInstance() {
+		if (instance == null) {
+			instance = new UserServiceImpl();
 		}
+		return instance;
+	}
+
+
+	public List<User> getAllUsers() throws IOException {
+		return userDao.getAllUsers();
+	}
+
+	@Override
+	public void addUser(User user) throws IOException, UserShortLengthPasswordException, UserLoginAlreadyExistException, UserShortLengthLoginException {
+		if (userValidator.isValidate(user)) {
+			userDao.saveUser(user);
+		}
+	}
+
+	@Override
+	public void removeUserById(Long userId) throws IOException {
+		userDao.removeUserById(userId);
 	}
 }
