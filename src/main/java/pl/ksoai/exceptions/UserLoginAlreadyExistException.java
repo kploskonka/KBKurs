@@ -7,6 +7,6 @@ public class UserLoginAlreadyExistException extends Exception {
 	}
 
 	public UserLoginAlreadyExistException() {
-		super("User login not found");
+		super("User login already exists");
 	}
 }

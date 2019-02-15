@@ -14,10 +14,14 @@ public class ProductDaoImpl implements ProductDao {
 	private String fileName;
 	private String productType;
 
-	public ProductDaoImpl(String fileName, String productType) throws IOException {
+	public ProductDaoImpl(String fileName, String productType) {
 		this.fileName = fileName;
 		this.productType = productType;
-		FileUtils.createNewFile(fileName);
+		try {
+			FileUtils.createNewFile(fileName);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -34,7 +38,6 @@ public class ProductDaoImpl implements ProductDao {
 
 			readLine = reader.readLine();
 		}
-
 		reader.close();
 
 		return productList;
