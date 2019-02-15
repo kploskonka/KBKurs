@@ -2,6 +2,8 @@ package pl.ksoai.dao;
 
 import pl.ksoai.api.ProductDao;
 import pl.ksoai.entity.Product;
+import pl.ksoai.entity.parser.ProductParser;
+import pl.ksoai.utils.FileUtils;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -10,29 +12,38 @@ import java.util.List;
 public class ProductDaoImpl implements ProductDao {
 
 	private final String fileName;
+	private final String productType;
 
-	public ProductDaoImpl(String fileName) {
+	public ProductDaoImpl(String fileName, String productType) throws IOException {
 		this.fileName = fileName;
-
-	}
-
-	public String getFileName() {
-		return fileName;
+		this.productType = productType;
+		FileUtils.createNewFile(fileName);
 	}
 
 	@Override
-	public void saveProduct(Product product) throws IOException {
-		FileOutputStream fileOutputStream = new FileOutputStream(fileName, true);
-		PrintWriter printWriter = new PrintWriter(fileOutputStream);
+	public List<Product> getAllProducts() throws IOException {
+		BufferedReader reader = new BufferedReader(new FileReader(fileName));
+		List<Product> productList = new ArrayList<>();
 
-		printWriter.write(product.toString() + '\n');
-		printWriter.close();
+		String readLine = reader.readLine();
+		while(readLine != null) {
+			Product product = ProductParser.stringToProduct(readLine, productType);
+			if (product != null) {
+				productList.add(product);
+			}
+
+			readLine = reader.readLine();
+		}
+
+		reader.close();
+
+		return productList;
 	}
 
 	@Override
 	public void saveProducts(List<Product> productList) throws IOException {
-		FileOutputStream fileOutputStream = new FileOutputStream(fileName, true);
-		PrintWriter printWriter = new PrintWriter(fileOutputStream);
+		FileUtils.clearFile(fileName);
+		PrintWriter printWriter = new PrintWriter(new FileOutputStream(fileName, true));
 
 		for (Product product : productList) {
 			printWriter.write(product.toString() + '\n');
@@ -42,20 +53,10 @@ public class ProductDaoImpl implements ProductDao {
 	}
 
 	@Override
-	public List<Product> getAllProducts() throws IOException {
-		FileReader fileReader = new FileReader(fileName);
-		BufferedReader reader = new BufferedReader(fileReader);
-		List<Product> productList = new ArrayList<Product>();
-
-		String readLine = reader.readLine();
-		while(readLine != null) {
-			String [] values = readLine.split("#");
-			Product product = new Product(Long.parseLong(values[0]), values[1], Float.parseFloat(values[2]), Float.parseFloat(values[3]), values[4], Integer.parseInt(values[5]));
-			productList.add(product);
-		}
-
-		reader.close();
-		return productList;
+	public void saveProduct(Product product) throws IOException {
+		List<Product> products = getAllProducts();
+		products.add(product);
+		saveProducts(products);
 	}
 
 	@Override

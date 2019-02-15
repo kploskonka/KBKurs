@@ -7,6 +7,7 @@ public class Product {
 	private Float weight;
 	private String color;
 	private Integer productCount;
+	public final static String PRODUCT_SEPARATOR = "#";
 
 	public Long getId() {
 		return id;
@@ -51,6 +52,6 @@ public class Product {
 
 	@Override
 	public String toString() {
-		return id + "#" + productName + "#" + price + "#" + weight + "#" + color + "#" + productCount;
+		return id + PRODUCT_SEPARATOR + productName + PRODUCT_SEPARATOR + price + PRODUCT_SEPARATOR + weight + PRODUCT_SEPARATOR + color + PRODUCT_SEPARATOR + productCount;
 	}
 }
