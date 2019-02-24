@@ -19,13 +19,13 @@ public class UserValidator {
 
 	public boolean isValidate(User user) throws UserShortLengthLoginException, UserShortLengthPasswordException, UserLoginAlreadyExistException {
 
-		if (isUserByLoginExist(user.getLogin())) {
+		if (!isUserByLoginExist(user.getLogin())) {
 			throw new UserLoginAlreadyExistException("User with this login already exists.");
 		}
-		if (isLoginLongEnough(user.getLogin())) {
+		if (!isLoginLongEnough(user.getLogin())) {
 			throw new UserShortLengthLoginException("Login should be at least 4 characters long.");
 		}
-		if (isPasswordLongEnough(user.getPassword())) {
+		if (!isPasswordLongEnough(user.getPassword())) {
 			throw new UserShortLengthPasswordException("Password should be at least 6 characters long.");
 		}
 		return true;
