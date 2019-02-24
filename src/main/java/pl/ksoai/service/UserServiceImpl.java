@@ -39,11 +39,30 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean addUser(User user) throws IOException, UserShortLengthPasswordException, UserLoginAlreadyExistException, UserShortLengthLoginException {
+		if (isUserByLoginExist(user.getLogin())) {
+			throw new UserLoginAlreadyExistException();
+		}
 		if (userValidator.isValidate(user)) {
 			userDao.saveUser(user);
 			return true;
 		}
 		return false;
+	}
+
+	private boolean isUserByLoginExist(String userLogin) {
+		try {
+			List<User> userList = userDao.getAllUsers();
+			for (User user : userList) {
+				if (user.getLogin().equalsIgnoreCase(userLogin)) {
+					return true;
+				}
+			}
+
+			return false;
+		} catch (IOException e) {
+			System.out.println("User list is empty");
+			return false;
+		}
 	}
 
 	@Override
