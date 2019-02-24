@@ -12,7 +12,7 @@ import java.util.List;
 public class ProductDaoImpl implements ProductDao {
 
 	private static ProductDaoImpl instance = null;
-	private static String fileName = "products.data";
+	private static final String fileName = "products.data";
 
 	public static ProductDaoImpl getInstance() {
 		if (instance == null) {
