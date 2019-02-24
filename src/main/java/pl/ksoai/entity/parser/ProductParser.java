@@ -6,12 +6,12 @@ import pl.ksoai.entity.Product;
 
 public class ProductParser {
 
-	public static Product stringToProduct(String productStr, String productType) {
-		if (productType.equals("PRODUCT")) {
+	public static Product stringToProduct(String productStr) {
+		if (productStr.startsWith("P")) {
 			return convertToProduct(productStr);
-		} else if (productType.equals("CLOTH")) {
+		} else if (productStr.startsWith("C")) {
 			return convertToCloth(productStr);
-		} else if (productType.equals("BOOTS")) {
+		} else if (productStr.startsWith("B")) {
 			return convertToBoots(productStr);
 		}
 		return null;

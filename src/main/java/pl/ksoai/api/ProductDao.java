@@ -16,8 +16,4 @@ public interface ProductDao {
 	void removeProductByName(String productName) throws IOException;
 
 	List<Product> getAllProducts() throws IOException;
-
-	Product getProductById(Long productId) throws IOException;
-
-	Product getProductByName(String productName) throws IOException;
 }
