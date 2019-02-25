@@ -53,18 +53,18 @@ public class UserServiceImpl implements UserService {
 		return false;
 	}
 
-	private boolean isUserByLoginExist(String userLogin) {
+	private boolean isUserByLoginExist(String userLogin) throws UserLoginAlreadyExistException {
 		try {
 			List<User> userList = userDao.getAllUsers();
 			for (User user : userList) {
 				if (user.getLogin().equalsIgnoreCase(userLogin)) {
-					return true;
+					throw new UserLoginAlreadyExistException();
 				}
 			}
 
 			return false;
 		} catch (IOException e) {
-			System.out.println("User list is empty");
+			e.printStackTrace();
 			return false;
 		}
 	}
