@@ -3,7 +3,7 @@ package pl.ksoai.entity;
 public class Cloth extends Product {
 	private String size;
 	private String material;
-	private static String PRODUCT_TYPE = "C";
+	private final static char PRODUCT_TYPE = 'C';
 
 	public String getMaterial() {
 		return material;
