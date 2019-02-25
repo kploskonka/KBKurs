@@ -20,6 +20,7 @@ public class UserDaoImpl implements UserDao {
 		} catch (IOException e) {
 			System.out.println("Error with file path");
 			e.printStackTrace();
+			System.exit(-1);
 		}
 	}
 
@@ -64,29 +65,6 @@ public class UserDaoImpl implements UserDao {
 		List<User> users = getAllUsers();
 		users.add(user);
 		saveUsers(users);
-	}
-
-	@Override
-	public User getUserByLogin(String login) throws IOException {
-		List<User> userList = getAllUsers();
-
-		for (User user : userList) {
-			if (user.getLogin().equalsIgnoreCase(login))
-				return user;
-		}
-		return null;
-	}
-
-	@Override
-	public User getUserById(Long userId) throws IOException {
-		List<User> userList = getAllUsers();
-
-		for (User user : userList) {
-			if (user.getId().equals(userId))
-				return user;
-		}
-
-		return null;
 	}
 
 	@Override
