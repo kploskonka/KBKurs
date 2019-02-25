@@ -11,12 +11,17 @@ import java.util.List;
 
 public class ProductDaoImpl implements ProductDao {
 
-	private String fileName;
-	private String productType;
+	private static ProductDaoImpl instance = null;
+	private static final String fileName = "products.data";
 
-	public ProductDaoImpl(String fileName, String productType) {
-		this.fileName = fileName;
-		this.productType = productType;
+	public static ProductDaoImpl getInstance() {
+		if (instance == null) {
+			instance = new ProductDaoImpl();
+		}
+		return instance;
+	}
+
+	private ProductDaoImpl() {
 		try {
 			FileUtils.createNewFile(fileName);
 		} catch (IOException e) {
@@ -31,7 +36,7 @@ public class ProductDaoImpl implements ProductDao {
 
 		String readLine = reader.readLine();
 		while(readLine != null) {
-			Product product = ProductParser.stringToProduct(readLine, productType);
+			Product product = ProductParser.stringToProduct(readLine);
 			if (product != null) {
 				productList.add(product);
 			}
@@ -88,31 +93,5 @@ public class ProductDaoImpl implements ProductDao {
 		}
 
 		saveProducts(productList);
-	}
-
-	@Override
-	public Product getProductById(Long productId) throws IOException {
-		List<Product> productList = getAllProducts();
-
-		for (Product product : productList) {
-			if (product.getId().equals(productId)) {
-				return product;
-			}
-		}
-
-		return null;
-	}
-
-	@Override
-	public Product getProductByName(String productName) throws IOException {
-		List<Product> productList = getAllProducts();
-
-		for (Product product : productList) {
-			if (product.getProductName().equalsIgnoreCase(productName)) {
-				return product;
-			}
-		}
-
-		return null;
 	}
 }

@@ -6,53 +6,57 @@ import pl.ksoai.entity.Product;
 
 public class ProductParser {
 
-	public static Product stringToProduct(String productStr, String productType) {
-		if (productType.equals("PRODUCT")) {
-			return convertToProduct(productStr);
-		} else if (productType.equals("CLOTH")) {
-			return convertToCloth(productStr);
-		} else if (productType.equals("BOOTS")) {
-			return convertToBoots(productStr);
+	public static Product stringToProduct(String productStr) {
+		final char productType = productStr.charAt(0);
+
+		switch (productType) {
+			case Product.PRODUCT_TYPE:
+				return convertToProduct(productStr);
+			case Cloth.PRODUCT_TYPE:
+				return convertToCloth(productStr);
+			case Boots.PRODUCT_TYPE:
+				return convertToBoots(productStr);
+			default:
+				return null;
 		}
-		return null;
 	}
 
 	private static Product convertToProduct(String productStr) {
 		String [] productInformation = productStr.split(Product.PRODUCT_SEPARATOR);
-		Long id = Long.parseLong(productInformation[0]);
-		String productName = productInformation[1];
-		Float price = Float.parseFloat(productInformation[2]);
-		Float weight = Float.parseFloat(productInformation[3]);
-		String color = productInformation[4];
-		Integer productCount = Integer.parseInt(productInformation[5]);
+		Long id = Long.parseLong(productInformation[1]);
+		String productName = productInformation[2];
+		Float price = Float.parseFloat(productInformation[3]);
+		Float weight = Float.parseFloat(productInformation[4]);
+		String color = productInformation[5];
+		Integer productCount = Integer.parseInt(productInformation[6]);
 
 		return new Product(id, productName, price, weight, color, productCount);
 	}
 
 	private static Cloth convertToCloth(String productStr) {
 		String [] productInformation = productStr.split(Product.PRODUCT_SEPARATOR);
-		Long id = Long.parseLong(productInformation[0]);
-		String productName = productInformation[1];
-		Float price = Float.parseFloat(productInformation[2]);
-		Float weight = Float.parseFloat(productInformation[3]);
-		String color = productInformation[4];
-		Integer productCount = Integer.parseInt(productInformation[5]);
-		String size = productInformation[6];
-		String material = productInformation[7];
+		Long id = Long.parseLong(productInformation[1]);
+		String productName = productInformation[2];
+		Float price = Float.parseFloat(productInformation[3]);
+		Float weight = Float.parseFloat(productInformation[4]);
+		String color = productInformation[5];
+		Integer productCount = Integer.parseInt(productInformation[6]);
+		String size = productInformation[7];
+		String material = productInformation[8];
 
 		return new Cloth(id, productName, price, weight, color, productCount, size, material);
 	}
 
 	private static Boots convertToBoots(String productStr) {
 		String [] productInformation = productStr.split(Product.PRODUCT_SEPARATOR);
-		Long id = Long.parseLong(productInformation[0]);
-		String productName = productInformation[1];
-		Float price = Float.parseFloat(productInformation[2]);
-		Float weight = Float.parseFloat(productInformation[3]);
-		String color = productInformation[4];
-		Integer productCount = Integer.parseInt(productInformation[5]);
-		Integer size = Integer.parseInt(productInformation[6]);
-		Boolean isNaturalSkin = Boolean.getBoolean(productInformation[7]);
+		Long id = Long.parseLong(productInformation[1]);
+		String productName = productInformation[2];
+		Float price = Float.parseFloat(productInformation[3]);
+		Float weight = Float.parseFloat(productInformation[4]);
+		String color = productInformation[5];
+		Integer productCount = Integer.parseInt(productInformation[6]);
+		Integer size = Integer.parseInt(productInformation[7]);
+		Boolean isNaturalSkin = Boolean.getBoolean(productInformation[8]);
 
 		return new Boots(id, productName, price, weight, color, productCount, size, isNaturalSkin);
 	}

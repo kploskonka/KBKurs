@@ -3,6 +3,7 @@ package pl.ksoai.entity;
 public class Boots extends Product {
 	private Integer size;
 	private boolean isNaturalSkin;
+	public final static char PRODUCT_TYPE = 'B';
 
 	public Integer getSize() {
 		return size;
@@ -20,6 +21,6 @@ public class Boots extends Product {
 
 	@Override
 	public String toString() {
-		return super.toString() + PRODUCT_SEPARATOR + size + PRODUCT_SEPARATOR + isNaturalSkin;
+		return PRODUCT_TYPE + PRODUCT_SEPARATOR + getBasicProductInfo() + PRODUCT_SEPARATOR + size + PRODUCT_SEPARATOR + isNaturalSkin;
 	}
 }
