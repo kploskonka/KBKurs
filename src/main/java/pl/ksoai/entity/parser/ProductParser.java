@@ -7,14 +7,18 @@ import pl.ksoai.entity.Product;
 public class ProductParser {
 
 	public static Product stringToProduct(String productStr) {
-		if (productStr.charAt(0) == 'P') {
-			return convertToProduct(productStr);
-		} else if (productStr.charAt(0) == 'C') {
-			return convertToCloth(productStr);
-		} else if (productStr.charAt(0) == 'B') {
-			return convertToBoots(productStr);
+		final char productType = productStr.charAt(0);
+
+		switch (productType) {
+			case Product.PRODUCT_TYPE:
+				return convertToProduct(productStr);
+			case Cloth.PRODUCT_TYPE:
+				return convertToCloth(productStr);
+			case Boots.PRODUCT_TYPE:
+				return convertToBoots(productStr);
+			default:
+				return null;
 		}
-		return null;
 	}
 
 	private static Product convertToProduct(String productStr) {

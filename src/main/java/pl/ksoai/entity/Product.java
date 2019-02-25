@@ -8,7 +8,7 @@ public class Product {
 	private String color;
 	private Integer productCount;
 	public final static String PRODUCT_SEPARATOR = "#";
-	private final static char PRODUCT_TYPE = 'P';
+	public final static char PRODUCT_TYPE = 'P';
 
 	public Long getId() {
 		return id;
