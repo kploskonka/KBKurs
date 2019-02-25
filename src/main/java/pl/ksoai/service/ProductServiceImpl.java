@@ -4,6 +4,7 @@ import pl.ksoai.api.ProductDao;
 import pl.ksoai.api.ProductService;
 import pl.ksoai.dao.ProductDaoImpl;
 import pl.ksoai.entity.Product;
+import pl.ksoai.validator.ProductValidator;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ public class ProductServiceImpl implements ProductService {
 
 	private static ProductServiceImpl instance = null;
 	private ProductDao productDao = ProductDaoImpl.getInstance();
+	private ProductValidator productValidator = ProductValidator.getInstance();
 
 	private ProductServiceImpl() {}
 
@@ -79,6 +81,14 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public boolean saveProduct(Product product) {
+		try {
+			if (productValidator.isValidate(product)) {
+				productDao.saveProduct(product);
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return false;
 	}
 }

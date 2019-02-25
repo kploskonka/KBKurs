@@ -5,8 +5,6 @@ import pl.ksoai.api.UserService;
 import pl.ksoai.dao.UserDaoImpl;
 import pl.ksoai.entity.User;
 import pl.ksoai.exceptions.UserLoginAlreadyExistException;
-import pl.ksoai.exceptions.UserShortLengthLoginException;
-import pl.ksoai.exceptions.UserShortLengthPasswordException;
 import pl.ksoai.validator.UserValidator;
 
 import java.io.IOException;
@@ -38,13 +36,19 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean addUser(User user) throws IOException, UserShortLengthPasswordException, UserLoginAlreadyExistException, UserShortLengthLoginException {
-		if (isUserByLoginExist(user.getLogin())) {
-			throw new UserLoginAlreadyExistException();
-		}
-		if (userValidator.isValidate(user)) {
-			userDao.saveUser(user);
-			return true;
+	public boolean addUser(User user) {
+		try {
+			if (isUserByLoginExist(user.getLogin())) {
+				throw new UserLoginAlreadyExistException();
+			}
+
+			if (userValidator.isValidate(user)) {
+				userDao.saveUser(user);
+				return true;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return false;
 	}
@@ -82,7 +86,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User getUserById(Long userId) throws IOException {
+	public User getUserById(Long userId) {
 		List<User> userList = getAllUsers();
 
 		for (User user : userList) {
@@ -96,6 +100,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean isCorrectLoginAndPassword(String login, String password) {
 		User foundUser = getUserByLogin(login);
+
+		if (foundUser == null) {
+			return false;
+		}
 
 		boolean isCorrectLogin = foundUser.getLogin().equals(login);
 		boolean isCorrectPassword = foundUser.getPassword().equals(password);
