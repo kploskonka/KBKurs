@@ -16,7 +16,7 @@ public class ProductServiceImpl implements ProductService {
 
 	private ProductServiceImpl() {}
 
-	public ProductServiceImpl getInstance() {
+	public static ProductServiceImpl getInstance() {
 		if (instance == null) {
 			instance = new ProductServiceImpl();
 		}
