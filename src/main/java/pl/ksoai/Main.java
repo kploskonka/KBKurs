@@ -6,6 +6,12 @@ import pl.ksoai.entity.Boots;
 import pl.ksoai.entity.Cloth;
 import pl.ksoai.entity.Product;
 import pl.ksoai.entity.User;
+import pl.ksoai.entity.enums.Color;
+import pl.ksoai.entity.enums.Material;
+import pl.ksoai.entity.enums.SkinType;
+import pl.ksoai.entity.parser.ColorParser;
+import pl.ksoai.entity.parser.MaterialParser;
+import pl.ksoai.entity.parser.SkinParser;
 import pl.ksoai.facade.UserLoginFacadeImpl;
 import pl.ksoai.service.ProductServiceImpl;
 
@@ -16,25 +22,26 @@ public class Main {
 
 	private static void startMenu() {
 		System.out.println("MANAGEMENT MENU");
-		System.out.println("1 - Zaloguj się");
-		System.out.println("2 - Zarejestruj się");
-		System.out.println("0 - Wyjdź");
+		System.out.println("1 - Log in");
+		System.out.println("2 - Sign up");
+		System.out.println("0 - Exit");
 	}
 
 	private static void loggedMenu() {
 		System.out.println("MANAGEMENT MENU");
-		System.out.println("1 - Dodaj nowy product");
-		System.out.println("0 - Wyloguj się");
+		System.out.println("1 - Add a new product");
+		System.out.println("0 - Log out");
 	}
 
 	public static void productTypeMenu() {
-		System.out.println("1 - Dodaj buty");
-		System.out.println("2 - Dodaj ubrania");
-		System.out.println("3 - Inne");
+		System.out.println("1 - Add boots");
+		System.out.println("2 - Add cloth");
+		System.out.println("3 - Other");
 	}
 
 	private static Product createOtherProduct() {
-		String productName, color;
+		String productName;
+		Color color;
 		Float price, weight;
 		Integer count;
 
@@ -47,8 +54,8 @@ public class Main {
 		System.out.println("Weight: ");
 		weight = scanner.nextFloat();
 
-		System.out.println("Color: ");
-		color = scanner.next();
+		System.out.println("Choose one of the colors: RED, BLUE, GREEN, WHITE, BLACK, YELLOW: ");
+		color = ColorParser.parseStringToColor(scanner.next());
 
 		System.out.println("Count: ");
 		count = scanner.nextInt();
@@ -57,10 +64,11 @@ public class Main {
 	}
 
 	private static Product createBootsProduct() {
-		String productName, color;
+		String productName;
+		Color color;
 		Float price, weight;
 		Integer count, size;
-		Boolean isNaturalSkin;
+		SkinType skinType;
 
 		System.out.println("ProductName: ");
 		productName = scanner.next();
@@ -71,8 +79,8 @@ public class Main {
 		System.out.println("Weight: ");
 		weight = scanner.nextFloat();
 
-		System.out.println("Color: ");
-		color = scanner.next();
+		System.out.println("Choose one of the colors: RED, BLUE, GREEN, WHITE, BLACK, YELLOW: ");
+		color = ColorParser.parseStringToColor(scanner.next());
 
 		System.out.println("Count: ");
 		count = scanner.nextInt();
@@ -80,16 +88,18 @@ public class Main {
 		System.out.println("Size: ");
 		size = scanner.nextInt();
 
-		System.out.println("Is natural skin: ");
-		isNaturalSkin = scanner.nextBoolean();
+		System.out.println("Choose one of the skin types: NATURAL, ARTIFICIAL: ");
+		skinType = SkinParser.parseStringToSkin(scanner.next());
 
-		return new Boots(1L, productName, price, weight, color, count, size, isNaturalSkin);
+		return new Boots(1L, productName, price, weight, color, count, size, skinType);
 	}
 
 	private static Product createClothProduct() {
-		String productName, color, size, material;
+		String productName, size;
 		Float price, weight;
 		Integer count;
+		Color color;
+		Material material;
 
 		System.out.println("ProductName: ");
 		productName = scanner.next();
@@ -100,8 +110,8 @@ public class Main {
 		System.out.println("Weight: ");
 		weight = scanner.nextFloat();
 
-		System.out.println("Color: ");
-		color = scanner.next();
+		System.out.println("Choose one of the colors: RED, BLUE, GREEN, WHITE, BLACK, YELLOW: ");
+		color = ColorParser.parseStringToColor(scanner.next());
 
 		System.out.println("Count: ");
 		count = scanner.nextInt();
@@ -109,8 +119,8 @@ public class Main {
 		System.out.println("Size: ");
 		size = scanner.next();
 
-		System.out.println("Material: ");
-		material = scanner.next();
+		System.out.println("Choose one of the materials: LEATHER, FUR, COTTON, WOOL, POLYESTERS");
+		material = MaterialParser.parseStringToMaterial(scanner.next());
 
 		return new Cloth(1L, productName, price, weight, color, count, size, material);
 	}
@@ -127,27 +137,27 @@ public class Main {
 			read = scanner.nextInt();
 			switch (read) {
 				case 1:
-					System.out.println("Podaj login:");
+					System.out.println("Enter login:");
 					String loginLog = scanner.next();
-					System.out.println("Podaj hasło:");
+					System.out.println("Enter password:");
 					String passwordLog = scanner.next();
 					if (userLoginFacade.loginUser(loginLog, passwordLog)) {
 						loggedIn = true;
-						System.out.println("Zalogowałeś się!");
+						System.out.println("Successfully logged in!");
 					} else {
-						System.out.println("Niepoprawne dane!");
+						System.out.println("Incorrect login or password!");
 					}
 					break;
 				case 2:
-					System.out.println("Podaj login:");
+					System.out.println("Enter login:");
 					String loginReg = scanner.next();
-					System.out.println("Podaj hasło:");
+					System.out.println("Enter password:");
 					String passwordReg = scanner.next();
 					User user = new User(1L, loginReg, passwordReg);
 					if (userLoginFacade.registerUser(user)) {
-						System.out.println("Zarejestrowałeś się!");
+						System.out.println("Successfully signed up!");
 					} else {
-						System.out.println("Coś poszło nie tak!");
+						System.out.println("Something went wrong!");
 					}
 					break;
 				case 0:
@@ -175,9 +185,9 @@ public class Main {
 								break;
 						}
 						if (productService.saveProduct(product)) {
-							System.out.println("Produkt został utworzony");
+							System.out.println("Product has been created.");
 						} else {
-							System.out.println("Produkt nie został utworzony.");
+							System.out.println("Product has not been created.");
 						}
 						break;
 					case 0:
