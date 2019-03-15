@@ -1,11 +1,15 @@
 package pl.ksoai.entity;
 
+import pl.ksoai.entity.enums.Color;
+import pl.ksoai.entity.enums.Material;
+import pl.ksoai.entity.enums.ProductSeparators;
+
 public class Cloth extends Product {
 	private String size;
-	private String material;
-	public final static char PRODUCT_TYPE = 'C';
+	private Material material;
 
-	public String getMaterial() {
+
+	public Material getMaterial() {
 		return material;
 	}
 
@@ -13,7 +17,7 @@ public class Cloth extends Product {
 		return size;
 	}
 
-	public Cloth(Long id, String productName, Float price, Float weight, String color, Integer productCount, String size, String material) {
+	public Cloth(Long id, String productName, Float price, Float weight, Color color, Integer productCount, String size, Material material) {
 		super(id, productName, price, weight, color, productCount);
 		this.size = size;
 		this.material = material;
@@ -21,6 +25,6 @@ public class Cloth extends Product {
 
 	@Override
 	public String toString() {
-		return PRODUCT_TYPE + PRODUCT_SEPARATOR + getBasicProductInfo() + PRODUCT_SEPARATOR + size + PRODUCT_SEPARATOR + material;
+		return ProductSeparators.CLOTH_ID.toString() + ProductSeparators.PRODUCT_SEPARATOR.toString() + getBasicProductInfo() + ProductSeparators.PRODUCT_SEPARATOR.toString() + size + ProductSeparators.PRODUCT_SEPARATOR.toString() + material;
 	}
 }
