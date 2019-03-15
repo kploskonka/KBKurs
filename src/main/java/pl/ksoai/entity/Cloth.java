@@ -1,9 +1,11 @@
 package pl.ksoai.entity;
 
+import pl.ksoai.entity.enums.ProductSeparators;
+
 public class Cloth extends Product {
 	private String size;
 	private String material;
-	public final static char PRODUCT_TYPE = 'C';
+
 
 	public String getMaterial() {
 		return material;
@@ -21,6 +23,6 @@ public class Cloth extends Product {
 
 	@Override
 	public String toString() {
-		return PRODUCT_TYPE + PRODUCT_SEPARATOR + getBasicProductInfo() + PRODUCT_SEPARATOR + size + PRODUCT_SEPARATOR + material;
+		return ProductSeparators.CLOTH_ID.toString() + ProductSeparators.PRODUCT_SEPARATOR.toString() + getBasicProductInfo() + ProductSeparators.PRODUCT_SEPARATOR.toString() + size + ProductSeparators.PRODUCT_SEPARATOR.toString() + material;
 	}
 }

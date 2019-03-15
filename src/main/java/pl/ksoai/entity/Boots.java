@@ -1,9 +1,10 @@
 package pl.ksoai.entity;
 
+import pl.ksoai.entity.enums.ProductSeparators;
+
 public class Boots extends Product {
 	private Integer size;
 	private boolean isNaturalSkin;
-	public final static char PRODUCT_TYPE = 'B';
 
 	public Integer getSize() {
 		return size;
@@ -21,6 +22,6 @@ public class Boots extends Product {
 
 	@Override
 	public String toString() {
-		return PRODUCT_TYPE + PRODUCT_SEPARATOR + getBasicProductInfo() + PRODUCT_SEPARATOR + size + PRODUCT_SEPARATOR + isNaturalSkin;
+		return ProductSeparators.BOOTS_ID + ProductSeparators.PRODUCT_SEPARATOR.toString() + getBasicProductInfo() + ProductSeparators.PRODUCT_SEPARATOR.toString() + size + ProductSeparators.PRODUCT_SEPARATOR.toString() + isNaturalSkin;
 	}
 }

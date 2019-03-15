@@ -1,5 +1,7 @@
 package pl.ksoai.entity;
 
+import pl.ksoai.entity.enums.ProductSeparators;
+
 public class Product {
 	private Long id;
 	private String productName;
@@ -7,8 +9,6 @@ public class Product {
 	private Float weight;
 	private String color;
 	private Integer productCount;
-	public final static String PRODUCT_SEPARATOR = "#";
-	public final static char PRODUCT_TYPE = 'P';
 
 	public Long getId() {
 		return id;
@@ -52,11 +52,11 @@ public class Product {
 	}
 
 	protected String getBasicProductInfo() {
-		return id + PRODUCT_SEPARATOR + productName + PRODUCT_SEPARATOR + price + PRODUCT_SEPARATOR + weight + PRODUCT_SEPARATOR + color + PRODUCT_SEPARATOR + productCount;
+		return id + ProductSeparators.PRODUCT_SEPARATOR.toString() + productName + ProductSeparators.PRODUCT_SEPARATOR.toString() + price + ProductSeparators.PRODUCT_SEPARATOR.toString() + weight + ProductSeparators.PRODUCT_SEPARATOR.toString() + color + ProductSeparators.PRODUCT_SEPARATOR.toString() + productCount;
 	}
 
 	@Override
 	public String toString() {
-		return PRODUCT_TYPE + PRODUCT_SEPARATOR + getBasicProductInfo();
+		return ProductSeparators.PRODUCT_ID.toString() + ProductSeparators.PRODUCT_SEPARATOR.toString() + getBasicProductInfo();
 	}
 }

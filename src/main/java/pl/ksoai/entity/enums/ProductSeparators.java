@@ -8,4 +8,9 @@ public enum ProductSeparators {
 	ProductSeparators(String productSeparator) {
 		this.productSeparator = productSeparator;
 	}
+
+	@Override
+	public String toString() {
+		return productSeparator;
+	}
 }
