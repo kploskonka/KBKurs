@@ -1,5 +1,6 @@
 package pl.ksoai.entity;
 
+import pl.ksoai.entity.enums.Color;
 import pl.ksoai.entity.enums.ProductSeparators;
 
 public class Product {
@@ -7,7 +8,7 @@ public class Product {
 	private String productName;
 	private Float price;
 	private Float weight;
-	private String color;
+	private Color color;
 	private Integer productCount;
 
 	public Long getId() {
@@ -26,7 +27,7 @@ public class Product {
 		return weight;
 	}
 
-	public String getColor() {
+	public Color getColor() {
 		return color;
 	}
 
@@ -42,7 +43,7 @@ public class Product {
 		this.productCount = productCount;
 	}
 
-	public Product(Long id, String productName, Float price, Float weight, String color, Integer productCount) {
+	public Product(Long id, String productName, Float price, Float weight, Color color, Integer productCount) {
 		this.id = id;
 		this.productName = productName;
 		this.price = price;
