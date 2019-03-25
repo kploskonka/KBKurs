@@ -5,9 +5,11 @@ import pl.ksoai.api.UserService;
 import pl.ksoai.dao.UserDaoImpl;
 import pl.ksoai.entity.User;
 import pl.ksoai.exceptions.UserLoginAlreadyExistException;
+import pl.ksoai.exceptions.UserShortLengthLoginException;
+import pl.ksoai.exceptions.UserShortLengthPasswordException;
 import pl.ksoai.validator.UserValidator;
 
-import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
@@ -27,50 +29,37 @@ public class UserServiceImpl implements UserService {
 
 
 	public List<User> getAllUsers() {
-		try {
-			return userDao.getAllUsers();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+		return userDao.getAllUsers();
 	}
 
 	@Override
-	public boolean addUser(User user) {
-		try {
-			if (isUserByLoginExist(user.getLogin())) {
-				throw new UserLoginAlreadyExistException();
-			}
+	public boolean addUser(User user) throws SQLException, UserShortLengthLoginException, UserShortLengthPasswordException, UserLoginAlreadyExistException {
 
-			if (userValidator.isValidate(user)) {
-				userDao.saveUser(user);
-				return true;
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
+		if (isUserByLoginExist(user.getLogin())) {
+			throw new UserLoginAlreadyExistException();
 		}
+
+		if (userValidator.isValidate(user)) {
+			userDao.saveUser(user);
+			return true;
+		}
+
 		return false;
 	}
 
 	private boolean isUserByLoginExist(String userLogin) throws UserLoginAlreadyExistException {
-		try {
-			List<User> userList = userDao.getAllUsers();
-			for (User user : userList) {
-				if (user.getLogin().equalsIgnoreCase(userLogin)) {
-					throw new UserLoginAlreadyExistException();
-				}
+		List<User> userList = userDao.getAllUsers();
+		for (User user : userList) {
+			if (user.getLogin().equalsIgnoreCase(userLogin)) {
+				throw new UserLoginAlreadyExistException();
 			}
-
-			return false;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return false;
 		}
+
+		return false;
 	}
 
 	@Override
-	public void removeUserById(Long userId) throws IOException {
+	public void removeUserById(Long userId) throws SQLException {
 		userDao.removeUserById(userId);
 	}
 
@@ -82,6 +71,7 @@ public class UserServiceImpl implements UserService {
 			if (user.getLogin().equalsIgnoreCase(login))
 				return user;
 		}
+
 		return null;
 	}
 
