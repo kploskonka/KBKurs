@@ -9,6 +9,7 @@ import pl.ksoai.exceptions.UserShortLengthLoginException;
 import pl.ksoai.exceptions.UserShortLengthPasswordException;
 import pl.ksoai.validator.UserValidator;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
@@ -32,7 +33,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean addUser(User user) throws UserShortLengthLoginException, UserShortLengthPasswordException, UserLoginAlreadyExistException {
+	public boolean addUser(User user) throws SQLException, UserShortLengthLoginException, UserShortLengthPasswordException, UserLoginAlreadyExistException {
 
 		if (isUserByLoginExist(user.getLogin())) {
 			throw new UserLoginAlreadyExistException();
@@ -58,7 +59,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void removeUserById(Long userId) {
+	public void removeUserById(Long userId) throws SQLException {
 		userDao.removeUserById(userId);
 	}
 
