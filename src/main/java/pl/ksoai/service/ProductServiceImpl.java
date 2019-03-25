@@ -4,8 +4,13 @@ import pl.ksoai.api.ProductDao;
 import pl.ksoai.api.ProductService;
 import pl.ksoai.dao.ProductDaoImpl;
 import pl.ksoai.entity.Product;
+import pl.ksoai.exceptions.ProductCountNegativeException;
+import pl.ksoai.exceptions.ProductNameEmptyException;
+import pl.ksoai.exceptions.ProductPriceNoPositiveException;
+import pl.ksoai.exceptions.ProductWeightNoPositiveException;
 import pl.ksoai.validator.ProductValidator;
 
+import java.io.IOException;
 import java.util.List;
 
 public class ProductServiceImpl implements ProductService {
@@ -25,22 +30,17 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<Product> getAllProducts() {
-		try {
-			return productDao.getAllProducts();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
+	public List<Product> getAllProducts() throws IOException {
+		return productDao.getAllProducts();
 	}
 
 	@Override
-	public int countProducts() {
+	public int countProducts() throws IOException {
 		return getAllProducts().size();
 	}
 
 	@Override
-	public Product getProductByName(String productName) {
+	public Product getProductByName(String productName) throws IOException {
 		for (Product product : getAllProducts()) {
 			if (product.getProductName().equalsIgnoreCase(productName)) return product;
 		}
@@ -48,7 +48,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public Product getProductById(Long productId) {
+	public Product getProductById(Long productId) throws IOException {
 		for (Product product : getAllProducts()) {
 			if (product.getId().equals(productId)) return product;
 		}
@@ -56,21 +56,21 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public boolean doesProductExist(String productName) {
+	public boolean doesProductExist(String productName) throws IOException {
 		Product product = getProductByName(productName);
 
 		return product == null;
 	}
 
 	@Override
-	public boolean doesProductExist(Long productId) {
+	public boolean doesProductExist(Long productId) throws IOException {
 		Product product = getProductById(productId);
 
 		return product == null;
 	}
 
 	@Override
-	public boolean isAvailableOnWarehouse(String productName) {
+	public boolean isAvailableOnWarehouse(String productName) throws IOException {
 		for (Product product : getAllProducts()) {
 			if (doesProductExist(productName) && product.getProductCount() > 0) {
 				return true;
@@ -80,15 +80,12 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public boolean saveProduct(Product product) {
-		try {
-			if (productValidator.isValidate(product)) {
-				productDao.saveProduct(product);
-				return true;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+	public boolean saveProduct(Product product) throws IOException, ProductCountNegativeException, ProductPriceNoPositiveException, ProductWeightNoPositiveException, ProductNameEmptyException {
+		if (productValidator.isValidate(product)) {
+			productDao.saveProduct(product);
+			return true;
 		}
+
 		return false;
 	}
 }

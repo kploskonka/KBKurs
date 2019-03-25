@@ -2,18 +2,18 @@ package pl.ksoai.api;
 
 import pl.ksoai.entity.User;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 public interface UserDao {
 
-	void saveUser(User user) throws IOException;
-	void saveUsers(List<User> userList) throws IOException;
+	void saveUser(User user) throws SQLException;
+	void saveUsers(List<User> userList) throws SQLException;
 
-	List<User> getAllUsers() throws IOException;
+	List<User> getAllUsers();
 
-	void removeUserByLogin(String login) throws IOException;
-	void removeUserById(Long userId) throws IOException;
+	void removeUserByLogin(String login) throws SQLException;
+	void removeUserById(Long userId) throws SQLException;
 
+	void updateUser(User user);
 }
