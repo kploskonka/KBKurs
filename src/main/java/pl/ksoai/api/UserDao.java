@@ -8,12 +8,13 @@ import java.util.List;
 
 public interface UserDao {
 
-	void saveUser(User user);
+	void saveUser(User user) throws SQLException;
 	void saveUsers(List<User> userList) throws SQLException;
 
 	List<User> getAllUsers();
 
-	void removeUserByLogin(String login);
-	void removeUserById(Long userId);
+	void removeUserByLogin(String login) throws SQLException;
+	void removeUserById(Long userId) throws SQLException;
 
+	void updateUser(User user);
 }

@@ -4,7 +4,7 @@ import pl.ksoai.api.UserDao;
 import pl.ksoai.entity.User;
 
 import java.sql.*;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class UserDaoImpl implements UserDao {
@@ -38,7 +38,7 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public List<User> getAllUsers() {
 
-		List<User> userList = new ArrayList<>();
+		List<User> userList = new LinkedList<User>();
 
 		try (Statement statement = connection.createStatement()) {
 			String query = "select * from" + tableName;
@@ -52,6 +52,7 @@ public class UserDaoImpl implements UserDao {
 				User user = new User(id, login, password);
 				userList.add(user);
 			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -82,49 +83,68 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public void saveUser(User user) {
-		List<User> users = getAllUsers();
-		users.add(user);
-
+	public void saveUser(User user) throws SQLException {
+		PreparedStatement preparedStatement = null;
 		try {
-			saveUsers(users);
-		} catch (Exception e) {
+			String query = "insert into " + tableName + " (login, password) values(?, ?)";
+
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, user.getLogin());
+			preparedStatement.setString(2, user.getPassword());
+			preparedStatement.execute();
+
+		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			preparedStatement.close();
 		}
 	}
 
 	@Override
-	public void removeUserById(Long userId) {
-		List<User> userList = getAllUsers();
-
-		for (User user : userList) {
-			if (user.getId().equals(userId)) {
-				userList.remove(user);
-				break;
-			}
-		}
-
+	public void removeUserById(Long userId) throws SQLException {
+		PreparedStatement preparedStatement = null;
 		try {
-			saveUsers(userList);
-		} catch (Exception e) {
+			String query = "delete from " + tableName + " where id=?";
+
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setLong(1, userId);
+			preparedStatement.execute();
+
+		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			preparedStatement.close();
 		}
 	}
 
 	@Override
-	public void removeUserByLogin(String login) {
-		List<User> userList = getAllUsers();
-
-		for (User user : userList) {
-			if (user.getLogin().equalsIgnoreCase(login)) {
-				userList.remove(user);
-				break;
-			}
-		}
-
+	public void removeUserByLogin(String login) throws SQLException {
+		PreparedStatement preparedStatement = null;
 		try {
-			saveUsers(userList);
-		} catch (Exception e) {
+			String query = "delete from " + tableName + " where login=?";
+
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, login);
+			preparedStatement.execute();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			preparedStatement.close();
+		}
+	}
+
+	public void updateUser(User user) {
+		PreparedStatement statement;
+		try {
+			String query = "update " + tableName + " set login = ?, password = ? where id=?";
+			statement = connection.prepareStatement(query);
+			statement.setString(1, user.getLogin());
+			statement.setString(2, user.getPassword());
+			statement.setLong(3, user.getId());
+			statement.execute();
+			statement.close();
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
