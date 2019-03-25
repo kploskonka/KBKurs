@@ -2,23 +2,26 @@ package pl.ksoai.dao;
 
 import pl.ksoai.api.UserDao;
 import pl.ksoai.entity.User;
-import pl.ksoai.entity.parser.UserParser;
-import pl.ksoai.utils.FileUtils;
 
-import java.io.*;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoImpl implements UserDao {
 
-	private static final String fileName = "users.data";
+	private Connection connection;
+	private final String databaseName = "management";
+	private final String tableName = "users";
+	private final String user = "root";
+	private final String password = "admin";
 	private static UserDaoImpl instance = null;
 
 	private UserDaoImpl() {
 		try {
-			FileUtils.createNewFile(fileName);
-		} catch (IOException e) {
-			System.out.println("Error with file path");
+			Class.forName("com.mysql.jdbc.Driver");
+			connection = DriverManager.getConnection("jdbc:mysql://localhost/" + databaseName + "?useSSL=false", user, password);
+		} catch (Exception e) {
+			System.out.println("Error with database connection");
 			e.printStackTrace();
 			System.exit(-1);
 		}
@@ -33,42 +36,65 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public List<User> getAllUsers() throws IOException {
-		BufferedReader reader = new BufferedReader(new FileReader(fileName));
+	public List<User> getAllUsers() {
+
 		List<User> userList = new ArrayList<>();
 
-		String readLine = reader.readLine();
-		while(readLine != null) {
-			User user = UserParser.stringToUser(readLine);
-			userList.add(user);
-			readLine = reader.readLine();
+		try (Statement statement = connection.createStatement()) {
+			String query = "select * from" + tableName;
+			ResultSet resultSet = statement.executeQuery(query);
+
+			while (resultSet.next()) {
+				Integer id = resultSet.getInt("id");
+				String login = resultSet.getString("login");
+				String password = resultSet.getString("password");
+
+				User user = new User(id, login, password);
+				userList.add(user);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
-		reader.close();
 		return userList;
 	}
 
 	@Override
-	public void saveUsers(List<User> userList) throws IOException {
-		FileUtils.clearFile(fileName);
-		PrintWriter printWriter = new PrintWriter(new FileOutputStream(fileName, true));
+	public void saveUsers(List<User> userList) throws SQLException {
+		PreparedStatement preparedStatement = null;
 
-		for (User user : userList) {
-			printWriter.write(user.toString());
+		try {
+			for (User user : userList) {
+				String query = "insert into " + tableName + " (id, login, password) values(?, ?, ?)";
+				preparedStatement = connection.prepareStatement(query);
+
+				preparedStatement.setLong(1, user.getId());
+				preparedStatement.setString(2, user.getLogin());
+				preparedStatement.setString(3, user.getPassword());
+
+				preparedStatement.execute();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			preparedStatement.close();
 		}
-
-		printWriter.close();
 	}
 
 	@Override
-	public void saveUser(User user) throws IOException {
+	public void saveUser(User user) {
 		List<User> users = getAllUsers();
 		users.add(user);
-		saveUsers(users);
+
+		try {
+			saveUsers(users);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
-	public void removeUserById(Long userId) throws IOException {
+	public void removeUserById(Long userId) {
 		List<User> userList = getAllUsers();
 
 		for (User user : userList) {
@@ -78,11 +104,15 @@ public class UserDaoImpl implements UserDao {
 			}
 		}
 
-		saveUsers(userList);
+		try {
+			saveUsers(userList);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
-	public void removeUserByLogin(String login) throws IOException {
+	public void removeUserByLogin(String login) {
 		List<User> userList = getAllUsers();
 
 		for (User user : userList) {
@@ -92,6 +122,10 @@ public class UserDaoImpl implements UserDao {
 			}
 		}
 
-		saveUsers(userList);
+		try {
+			saveUsers(userList);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
