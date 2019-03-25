@@ -195,6 +195,7 @@ public class Main {
 						break;
 					case 3:
 						System.out.println(productFacade.getAllProducts());
+						break;
 					case 0:
 						loggedIn = false;
 						break;
