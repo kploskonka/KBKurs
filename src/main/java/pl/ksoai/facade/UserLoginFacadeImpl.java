@@ -20,7 +20,13 @@ public class UserLoginFacadeImpl implements UserLoginFacade {
 
 	@Override
 	public boolean registerUser(User user) {
-		return userService.addUser(user);
+		try {
+			return userService.addUser(user);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return false;
 	}
 
 	@Override

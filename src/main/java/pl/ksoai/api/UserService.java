@@ -10,12 +10,12 @@ import java.util.List;
 
 public interface UserService {
 
-	boolean addUser(User user);
+	boolean addUser(User user) throws UserShortLengthLoginException, UserShortLengthPasswordException, UserLoginAlreadyExistException;
 
-	void removeUserById(Long userId) throws IOException;
+	void removeUserById(Long userId);
 
 	List<User> getAllUsers();
-	User getUserById(Long userId) throws IOException;
+	User getUserById(Long userId);
 	User getUserByLogin(String login);
 
 	boolean isCorrectLoginAndPassword(String login, String password);
