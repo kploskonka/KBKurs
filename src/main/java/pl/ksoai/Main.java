@@ -1,5 +1,6 @@
 package pl.ksoai;
 
+import pl.ksoai.api.ProductFacade;
 import pl.ksoai.api.ProductService;
 import pl.ksoai.api.UserLoginFacade;
 import pl.ksoai.entity.Boots;
@@ -12,6 +13,7 @@ import pl.ksoai.entity.enums.SkinType;
 import pl.ksoai.entity.parser.ColorParser;
 import pl.ksoai.entity.parser.MaterialParser;
 import pl.ksoai.entity.parser.SkinParser;
+import pl.ksoai.facade.ProductFacadeImpl;
 import pl.ksoai.facade.UserLoginFacadeImpl;
 import pl.ksoai.service.ProductServiceImpl;
 
@@ -30,6 +32,8 @@ public class Main {
 	private static void loggedMenu() {
 		System.out.println("MANAGEMENT MENU");
 		System.out.println("1 - Add a new product");
+		System.out.println("2 - Remove a product");
+		System.out.println("3 - Show available products");
 		System.out.println("0 - Log out");
 	}
 
@@ -127,7 +131,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		UserLoginFacade userLoginFacade = UserLoginFacadeImpl.getInstance();
-		ProductService productService = ProductServiceImpl.getInstance();
+		ProductFacade productFacade = ProductFacadeImpl.getInstance();
 		boolean appOn = true;
 		boolean loggedIn = false;
 		int read;
@@ -154,11 +158,7 @@ public class Main {
 					System.out.println("Enter password:");
 					String passwordReg = scanner.next();
 					User user = new User(1L, loginReg, passwordReg);
-					if (userLoginFacade.registerUser(user)) {
-						System.out.println("Successfully signed up!");
-					} else {
-						System.out.println("Something went wrong!");
-					}
+					System.out.println(userLoginFacade.registerUser(user));
 					break;
 				case 0:
 					appOn = false;
@@ -184,12 +184,17 @@ public class Main {
 								product = createOtherProduct();
 								break;
 						}
-						if (productService.saveProduct(product)) {
-							System.out.println("Product has been created.");
-						} else {
-							System.out.println("Product has not been created.");
-						}
+
+						System.out.println(productFacade.createProduct(product));
 						break;
+					case 2:
+						System.out.println("Available products: " + productFacade.getAllProducts());
+						System.out.println("Enter product's name: ");
+						String productName = scanner.next();
+						System.out.println(productFacade.removeProduct(productName));
+						break;
+					case 3:
+						System.out.println(productFacade.getAllProducts());
 					case 0:
 						loggedIn = false;
 						break;
