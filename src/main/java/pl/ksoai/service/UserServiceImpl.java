@@ -9,7 +9,6 @@ import pl.ksoai.exceptions.UserShortLengthLoginException;
 import pl.ksoai.exceptions.UserShortLengthPasswordException;
 import pl.ksoai.validator.UserValidator;
 
-import java.io.IOException;
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
