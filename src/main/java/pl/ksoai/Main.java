@@ -1,7 +1,6 @@
 package pl.ksoai;
 
 import pl.ksoai.api.ProductFacade;
-import pl.ksoai.api.ProductService;
 import pl.ksoai.api.UserLoginFacade;
 import pl.ksoai.entity.Boots;
 import pl.ksoai.entity.Cloth;
@@ -15,7 +14,6 @@ import pl.ksoai.entity.parser.MaterialParser;
 import pl.ksoai.entity.parser.SkinParser;
 import pl.ksoai.facade.ProductFacadeImpl;
 import pl.ksoai.facade.UserLoginFacadeImpl;
-import pl.ksoai.service.ProductServiceImpl;
 
 import java.util.Scanner;
 
