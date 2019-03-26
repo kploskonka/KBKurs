@@ -16,6 +16,8 @@ import pl.ksoai.facade.ProductFacadeImpl;
 import pl.ksoai.facade.UserLoginFacadeImpl;
 import pl.ksoai.service.UserServiceImpl;
 
+import java.util.InputMismatchException;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Main {
@@ -47,6 +49,7 @@ public class Main {
 		Color color;
 		Float price, weight;
 		Integer count;
+		scanner.useLocale(Locale.US);
 
 		System.out.println("ProductName: ");
 		productName = scanner.next();
@@ -72,6 +75,8 @@ public class Main {
 		Float price, weight;
 		Integer count, size;
 		SkinType skinType;
+
+		scanner.useLocale(Locale.US);
 
 		System.out.println("ProductName: ");
 		productName = scanner.next();
@@ -103,6 +108,8 @@ public class Main {
 		Integer count;
 		Color color;
 		Material material;
+
+		scanner.useLocale(Locale.US);
 
 		System.out.println("ProductName: ");
 		productName = scanner.next();
@@ -137,68 +144,80 @@ public class Main {
 
 		while (appOn) {
 			startMenu();
-			read = scanner.nextInt();
-			switch (read) {
-				case 1:
-					System.out.println("Enter login:");
-					String loginLog = scanner.next();
-					System.out.println("Enter password:");
-					String passwordLog = scanner.next();
-					if (userLoginFacade.loginUser(loginLog, passwordLog)) {
-						loggedIn = true;
-						System.out.println("Successfully logged in!");
-					} else {
-						System.out.println("Incorrect login or password!");
-					}
-					break;
-				case 2:
-					System.out.println("Enter login:");
-					String loginReg = scanner.next();
-					System.out.println("Enter password:");
-					String passwordReg = scanner.next();
-					User user = new User(UserServiceImpl.getInstance().getAllUsers().size() + 1, loginReg, passwordReg);
-					System.out.println(userLoginFacade.registerUser(user));
-					break;
-				case 0:
-					appOn = false;
-					break;
-			}
-
-			while (loggedIn) {
-				loggedMenu();
+			try {
 				read = scanner.nextInt();
 				switch (read) {
 					case 1:
-						productTypeMenu();
-						read = scanner.nextInt();
-						Product product = null;
-						switch (read) {
-							case 1:
-								product = createBootsProduct();
-								break;
-							case 2:
-								product = createClothProduct();
-								break;
-							case 3:
-								product = createOtherProduct();
-								break;
+						System.out.println("Enter login:");
+						String loginLog = scanner.next();
+						System.out.println("Enter password:");
+						String passwordLog = scanner.next();
+						if (userLoginFacade.loginUser(loginLog, passwordLog)) {
+							loggedIn = true;
+							System.out.println("Successfully logged in!");
+						} else {
+							System.out.println("Incorrect login or password!");
 						}
-
-						System.out.println(productFacade.createProduct(product));
 						break;
 					case 2:
-						System.out.println("Available products: " + productFacade.getAllProducts());
-						System.out.println("Enter product's name: ");
-						String productName = scanner.next();
-						System.out.println(productFacade.removeProduct(productName));
-						break;
-					case 3:
-						System.out.println(productFacade.getAllProducts());
+						System.out.println("Enter login:");
+						String loginReg = scanner.next();
+						System.out.println("Enter password:");
+						String passwordReg = scanner.next();
+						User user = new User(UserServiceImpl.getInstance().getAllUsers().size() + 1, loginReg, passwordReg);
+						System.out.println(userLoginFacade.registerUser(user));
 						break;
 					case 0:
-						loggedIn = false;
+						appOn = false;
 						break;
+					default:
+						startMenu();
 				}
+
+				while (loggedIn) {
+					loggedMenu();
+
+					read = scanner.nextInt();
+					switch (read) {
+						case 1:
+							productTypeMenu();
+							read = scanner.nextInt();
+							Product product = null;
+
+							switch (read) {
+								case 1:
+									product = createBootsProduct();
+									break;
+								case 2:
+									product = createClothProduct();
+									break;
+								case 3:
+									product = createOtherProduct();
+									break;
+							}
+
+							System.out.println(productFacade.createProduct(product));
+							break;
+						case 2:
+							System.out.println("Available products: " + productFacade.getAllProducts());
+							System.out.println("Enter product's name: ");
+							String productName = scanner.next();
+							System.out.println(productFacade.removeProduct(productName));
+							break;
+						case 3:
+							System.out.println(productFacade.getAllProducts());
+							break;
+						case 0:
+							loggedIn = false;
+							break;
+						default:
+							loggedMenu();
+					}
+				}
+			} catch (InputMismatchException e) {
+				System.out.println("Invalid input! Shutting down the program.");
+				appOn = false;
+				System.exit(0);
 			}
 		}
 	}
