@@ -82,16 +82,19 @@ public class ProductDaoImpl implements ProductDao {
 	}
 
 	@Override
-	public void removeProductByName(String productName) throws IOException {
+	public boolean removeProductByName(String productName) throws IOException {
 		List<Product> productList = getAllProducts();
+		boolean isProductRemoved = false;
 
 		for (Product product : productList) {
 			if (product.getProductName().equalsIgnoreCase(productName)) {
 				productList.remove(product);
+				isProductRemoved = true;
 				break;
 			}
 		}
-
 		saveProducts(productList);
+
+		return isProductRemoved;
 	}
 }

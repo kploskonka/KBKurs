@@ -88,4 +88,8 @@ public class ProductServiceImpl implements ProductService {
 
 		return false;
 	}
+
+	public boolean removeProduct(String productName) throws Exception {
+		return productDao.removeProductByName(productName);
+	}
 }

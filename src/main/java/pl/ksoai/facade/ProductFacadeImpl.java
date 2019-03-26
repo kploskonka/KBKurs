@@ -23,8 +23,11 @@ public class ProductFacadeImpl implements ProductFacade {
 	@Override
 	public String createProduct(Product product) {
 		try {
-			productService.saveProduct(product);
-			return "Product successfully saved!";
+			if (productService.saveProduct(product)) {
+				return "Product successfully saved!";
+			} else {
+				return "Product not saved";
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			return e.getMessage();
@@ -34,18 +37,12 @@ public class ProductFacadeImpl implements ProductFacade {
 	@Override
 	public String removeProduct(String productName) {
 		try {
-			List<Product> products = productService.getAllProducts();
-
-			for (Product product : products) {
-				if (product.getProductName().equalsIgnoreCase(productName)) {
-					products.remove(product);
-					return "Product successfully removed!";
-				}
+			if (productService.removeProduct(productName)) {
+				return "Product removed successfully";
+			} else {
+				return "Product does not exist";
 			}
-
-			return "Given product does not exist";
 		} catch (Exception e) {
-			e.printStackTrace();
 			return e.getMessage();
 		}
 	}

@@ -18,8 +18,8 @@ public class UserDaoImpl implements UserDao {
 
 	private UserDaoImpl() {
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			connection = DriverManager.getConnection("jdbc:mysql://localhost/" + databaseName + "?useSSL=false", user, password);
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			connection = DriverManager.getConnection("jdbc:mysql://localhost/" + databaseName + "?serverTimezone=UTC", user, password);
 		} catch (Exception e) {
 			System.out.println("Error with database connection");
 			e.printStackTrace();
@@ -41,7 +41,7 @@ public class UserDaoImpl implements UserDao {
 		List<User> userList = new LinkedList<User>();
 
 		try (Statement statement = connection.createStatement()) {
-			String query = "select * from" + tableName;
+			String query = "select * from " + tableName;
 			ResultSet resultSet = statement.executeQuery(query);
 
 			while (resultSet.next()) {
