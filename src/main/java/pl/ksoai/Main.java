@@ -14,6 +14,7 @@ import pl.ksoai.entity.parser.MaterialParser;
 import pl.ksoai.entity.parser.SkinParser;
 import pl.ksoai.facade.ProductFacadeImpl;
 import pl.ksoai.facade.UserLoginFacadeImpl;
+import pl.ksoai.service.UserServiceImpl;
 
 import java.util.Scanner;
 
@@ -62,7 +63,7 @@ public class Main {
 		System.out.println("Count: ");
 		count = scanner.nextInt();
 
-		return new Product(1L, productName, price, weight, color, count);
+		return new Product(ProductFacadeImpl.getInstance().countProducts() + 1L, productName, price, weight, color, count);
 	}
 
 	private static Product createBootsProduct() {
@@ -93,7 +94,7 @@ public class Main {
 		System.out.println("Choose one of the skin types: NATURAL, ARTIFICIAL: ");
 		skinType = SkinParser.parseStringToSkin(scanner.next());
 
-		return new Boots(1L, productName, price, weight, color, count, size, skinType);
+		return new Boots(ProductFacadeImpl.getInstance().countProducts() + 1L, productName, price, weight, color, count, size, skinType);
 	}
 
 	private static Product createClothProduct() {
@@ -124,7 +125,7 @@ public class Main {
 		System.out.println("Choose one of the materials: LEATHER, FUR, COTTON, WOOL, POLYESTERS");
 		material = MaterialParser.parseStringToMaterial(scanner.next());
 
-		return new Cloth(1L, productName, price, weight, color, count, size, material);
+		return new Cloth(ProductFacadeImpl.getInstance().countProducts() + 1L, productName, price, weight, color, count, size, material);
 	}
 
 	public static void main(String[] args) {
@@ -155,7 +156,7 @@ public class Main {
 					String loginReg = scanner.next();
 					System.out.println("Enter password:");
 					String passwordReg = scanner.next();
-					User user = new User(1L, loginReg, passwordReg);
+					User user = new User(UserServiceImpl.getInstance().getAllUsers().size() + 1, loginReg, passwordReg);
 					System.out.println(userLoginFacade.registerUser(user));
 					break;
 				case 0:

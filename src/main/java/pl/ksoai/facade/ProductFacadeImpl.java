@@ -56,4 +56,14 @@ public class ProductFacadeImpl implements ProductFacade {
 		}
 		return null;
 	}
+
+	@Override
+	public Integer countProducts() {
+		try {
+			return productService.countProducts();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
 }
