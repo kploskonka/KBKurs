@@ -8,4 +8,5 @@ public interface ProductFacade {
 	String createProduct(Product product);
 	String removeProduct(String productName);
 	List<Product> getAllProducts();
+	Integer countProducts();
 }
