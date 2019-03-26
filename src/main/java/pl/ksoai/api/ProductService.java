@@ -22,4 +22,5 @@ public interface ProductService {
 
 	boolean saveProduct(Product product) throws IOException, ProductCountNegativeException, ProductPriceNoPositiveException, ProductWeightNoPositiveException, ProductNameEmptyException;
 
+	boolean removeProduct(String productName) throws Exception;
 }

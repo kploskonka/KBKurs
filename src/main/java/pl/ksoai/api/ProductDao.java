@@ -13,7 +13,7 @@ public interface ProductDao {
 
 	void removeProductById(Long productId) throws IOException;
 
-	void removeProductByName(String productName) throws IOException;
+	boolean removeProductByName(String productName) throws IOException;
 
 	List<Product> getAllProducts() throws IOException;
 }
