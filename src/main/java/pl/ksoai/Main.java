@@ -38,7 +38,7 @@ public class Main {
 		System.out.println("0 - Log out");
 	}
 
-	public static void productTypeMenu() {
+	private static void productTypeMenu() {
 		System.out.println("1 - Add boots");
 		System.out.println("2 - Add cloth");
 		System.out.println("3 - Other");
@@ -51,7 +51,7 @@ public class Main {
 		Integer count;
 		scanner.useLocale(Locale.US);
 
-		System.out.println("ProductName: ");
+		System.out.println("Product name: ");
 		productName = scanner.next();
 
 		System.out.println("Price: ");
@@ -78,7 +78,7 @@ public class Main {
 
 		scanner.useLocale(Locale.US);
 
-		System.out.println("ProductName: ");
+		System.out.println("Boots name: ");
 		productName = scanner.next();
 
 		System.out.println("Price: ");
@@ -111,7 +111,7 @@ public class Main {
 
 		scanner.useLocale(Locale.US);
 
-		System.out.println("ProductName: ");
+		System.out.println("Cloth name: ");
 		productName = scanner.next();
 
 		System.out.println("Price: ");
